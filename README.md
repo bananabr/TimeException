@@ -1,3 +1,7 @@
+# Disclaimer
+
+This tool is provided for educational purposes only.
+
 # What is this?
 A proof-of-concept tool built to identify folders that are exempted from AV real-time scanning in Windows systems.
 
