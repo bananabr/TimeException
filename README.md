@@ -6,6 +6,9 @@ The tool receives a folder path as argument and iterates through its child direc
 
 # Why it works?
 AV solutions will check most of the content written to disk and will hook the calls related to file writing.  This extra step will produce a measurable time diference when writing to a folder that is excluded from real-time scanning.
+The following graph depicts the mean number of microseconds taken to write a file in several folders.  The two folders excluded from real-time scanning are highlighted in the picture.
+
+![Drag Racing](https://github.com/bananabr/TimeException/blob/main/graph.png)
 
 # How to use it?
 Compile the project using Visual Studio 2019+. Select a target folder and simply run the tool passing its path as the first argument. Optionally, you can also provide a custom sample_size (default: 5000), depth (default: 0), and sensitivity (default: 0.25).
