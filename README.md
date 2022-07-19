@@ -1,4 +1,4 @@
-# What this is?
+# What is this?
 A proof-of-concept tool built to identify folder that are exempted from AV real-time scanning in Windows systems.
 
 # How it works?
