@@ -19,4 +19,5 @@ TimeException.exe root_folder [sample_size] [depth] [sensitivity]
 ```
 # Notes
 
-I used Microsoft Defender for most of my testing.  Results may vary with different AV/EDR engines.
+* I used Microsoft Defender for most of my testing.  Results may vary with different AV/EDR engines.
+* In a real Red Team engagement I would run the tool multiple times in different hours of the day before actually trying to write any payloads to the folders detected by the tool.  Disk load varies and false positives are to be expected.
