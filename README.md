@@ -11,11 +11,19 @@ The following graph depicts the average number of microseconds taken to write a 
 ![path x elapsed time graph](https://github.com/bananabr/TimeException/blob/main/graph.png)
 
 # How to use it?
-Compile the project using Visual Studio 2019+.  Select a target folder and run the tool, passing its path as the first argument.  Optionally, you can also provide a custom sample_size (default: 5000), depth (default: 0), and sensitivity (default: 0.25).
+Compile the project using Visual Studio 2019+.  Select a target folder and run the tool, passing its path as the first argument.  Optionally, you can also provide a custom sample_size (default: 500), depth (default: 0), and sensitivity (default: 0.25).
 
 ```
 Usage:
-TimeException.exe root_folder [sample_size] [depth] [sensitivity]
+TimeException.exe [options]
+
+Options:
+-h|--help     Print usage instructions
+--mode        Exceptions to look folder. 0=Folder, 1=Extensions, 2=Process
+--sample-size Sample size to use. Default=500
+--sensitivity Sensitivity value. Default=0.25
+--verbose     Increase verbosity
+--targets     File containing folder paths, extensions, or process names depending on the mode selected
 ```
 # Notes
 
