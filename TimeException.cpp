@@ -110,7 +110,8 @@ string getUuid() {
 void printUsage() {
 	std::cout << "Usage:" << endl;
 	std::cout << "-h|--help     Print usage instructions" << endl;
-	std::cout << "--mode        Exceptions to look folder. 0=Folder, 1=Extensions, 2=Process, 3=file, 4=benchmark" << endl;
+	std::cout << "--mode        Exceptions to look folder. 0=Folder, 1=Extensions, 2=Process, 3=file, 4=benchmark (Default=4)" << endl;
+	std::cout << "--ref         Reference time value. Default=global average" << endl;
 	std::cout << "--sample-size Sample size to use. Default=500" << endl;
 	std::cout << "--sensitivity Sensitivity value. Default=0.25" << endl;
 	std::cout << "--benchmarker Fully qualified path to a benchmarker executable" << endl;
@@ -156,8 +157,9 @@ int main(int argc, char** argv)
 	//std::filesystem::path basepath = argv[1];
 	size_t sample_size = MIN_SAMPLE_SIZE;
 	double sensitivity = DEFAULT_SENSITIVITY;
-	int opMode = DIR_MODE;
+	int opMode = BENCH_MODE;
 	ifstream targetsFile;
+	double ref = 0;
 	bool verbose = false;
 	string benchmarker = argv[0];
 
@@ -177,7 +179,8 @@ int main(int argc, char** argv)
 			opMode = PROC_MODE;
 			break;
 		case FILE_MODE:
-			opMode = FILE_MODE;
+			cerr << "[-] File mode is not implemented yet!" << endl;
+			return 1;
 			break;
 		case BENCH_MODE:
 			opMode = BENCH_MODE;
@@ -186,6 +189,10 @@ int main(int argc, char** argv)
 			printUsage();
 			return 1;
 		}
+	}
+
+	if (args.count("--ref")) {
+		ref = stod(args["--ref"]);
 	}
 
 	if (opMode != BENCH_MODE) {
@@ -335,7 +342,7 @@ int main(int argc, char** argv)
 			try {
 				std::filesystem::path procPath = std::filesystem::temp_directory_path() / line;
 				filesystem::copy(benchmarker, procPath);
-				double tm = stod(getBenchmarkResult(procPath.string() + string(" --mode 4 --sample-size ") + to_string(sample_size)));
+				double tm = stod(getBenchmarkResult(procPath.string() + string(" --sample-size ") + to_string(sample_size)));
 				filesystem::remove(procPath);
 				globalResultSet.push_back(tm);
 				paths.push_back(line);
@@ -358,7 +365,15 @@ int main(int argc, char** argv)
 	for (size_t i = 0; i < paths.size(); i++)
 	{
 		double tm = globalResultSet[i];
-		double gMean = getAverage(globalResultSet);
+		double gMean;
+		if (ref > 0)
+		{
+			gMean = ref;
+
+		}
+		else {
+			gMean = getAverage(globalResultSet);
+		}
 		double gMeanDistance = (1 - (tm / gMean));
 		if (gMeanDistance >= sensitivity)
 		{
@@ -379,7 +394,7 @@ int main(int argc, char** argv)
 			if (opMode == PROC_MODE) {
 				std::filesystem::path procPath = std::filesystem::temp_directory_path() / paths[i];
 				filesystem::copy(benchmarker, procPath);
-				tm = stod(getBenchmarkResult(procPath.string() + string(" --mode 4 --sample-size 5000")));
+				tm = stod(getBenchmarkResult(procPath.string() + string(" --sample-size 5000")));
 				filesystem::remove(procPath);
 			}
 			else {
