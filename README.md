@@ -15,11 +15,61 @@ The following graph depicts the average number of microseconds taken to write a 
 ![path x elapsed time graph](https://github.com/bananabr/TimeException/blob/main/graph.png)
 
 # How to use it?
-Compile the project using Visual Studio 2019+.  Select a target folder and run the tool, passing its path as the first argument.  Optionally, you can also provide a custom sample_size (default: 5000), depth (default: 0), and sensitivity (default: 0.25).
+
+## Compilation
+* Install and configure https://vcpkg.io/en/index.html
+* Install the [boost-process](https://www.boost.org/doc/libs/1_64_0/doc/html/process.html) dependency using vcpkg
+* Compile the project using Visual Studio 2019+.
+
+## Execution modes
+### Folder execution mode
+Execution mode 0 (--mode 0) will try to map folders in Defender's exclusion list. A user must provide a list of folders to be tested through the **--targets** argument. The **--sample-size** argument can be used to adjust the number of files created in each directory.
+
+### Exntension execution mode
+Execution mode 1 (--mode 1) will try to map extensions in Defender's exclusion list. A user must provide a list of extensions to be tested through the **--targets** argument. The extensions in the targets file must have the format **.ext** (e.g. .png, .txt, .foobar, etc).  The **--sample-size** argument can be used to adjust the number of files created for each extension.
+
+Example:
+```
+TimeException.exe --sample-size 1000 ---mode 1 --targets exts.txt
+```
+
+### Process execution mode
+Execution mode 2 (--mode 2) will try to map processes in Defender's exclusion list. A user must provide a list of process names to be tested through the **--targets** argument. The extensions in the targets file must have the format **program.exe** (e.g. calc.exe, mspaint.exe, etc).  Process execution mode requires a benchmarker to be provided.  A benchmarker is a console application who accepts --sample-size as a valid argument and outputs a double floating point number.  TimeException itself is a benchmarker. The **--sample-size** argument can be used to adjust the number of operations performed by the benchmarker to calculate its result.
+
+Example:
+```
+TimeException.exe --sample-size 1500 --ref 3.7225 --mode 2 --benchmarker .\TimeException.exe --targets procs.txt
+```
+
+### File execution mode
+Execution mode 3 (--mode 3) is not implemented yet.
+
+### Benchmark execution mode
+Execution mode 4 (--mode 4) will measure the average time it takes to write a 512 bytes file to the current directory.  The **--sample-size** argument can be used to adjust the number of files used to calculate the mean time to write.
+
+The benchmark mode is TimeException's default mode of operation.
+
+Example:
+```
+TimeException.exe --mode 4 --sample-size 5000
+```
+
+## General usage instructions
 
 ```
 Usage:
-TimeException.exe root_folder [sample_size] [depth] [sensitivity]
+TimeException.exe [options]
+
+Options:
+Usage:
+-h|--help     Print usage instructions
+--mode        Exceptions to look folder. 0=Folder, 1=Extensions, 2=Process, 3=file, 4=benchmark (Default=4)
+--ref         Reference time value. Default=global average
+--sample-size Sample size to use. Default=500
+--sensitivity Sensitivity value. Default=0.25
+--benchmarker Fully qualified path to a benchmarker executable
+--verbose     Increase verbosity
+--targets     File containing folder paths, extensions, or process names depending on the mode selected
 ```
 # Notes
 
