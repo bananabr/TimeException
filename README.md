@@ -25,6 +25,11 @@ The following graph depicts the average number of microseconds taken to write a 
 ### Folder execution mode
 Execution mode 0 (--mode 0) will try to map folders in Defender's exclusion list. A user must provide a list of folders to be tested through the **--targets** argument. The **--sample-size** argument can be used to adjust the number of files created in each directory.
 
+Example:
+```
+TimeException.exe --sample-size 1000 ---mode 0 --targets dirs.txt
+```
+
 ### Exntension execution mode
 Execution mode 1 (--mode 1) will try to map extensions in Defender's exclusion list. A user must provide a list of extensions to be tested through the **--targets** argument. The extensions in the targets file must have the format **.ext** (e.g. .png, .txt, .foobar, etc).  The **--sample-size** argument can be used to adjust the number of files created for each extension.
 
