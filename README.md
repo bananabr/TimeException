@@ -1,6 +1,6 @@
 # Disclaimer
 
-This tool is provided for educational purposes only.
+This tool is provided for educational purposes only. Any actions and or activities related to the material contained within this repository is solely your responsibility. The misuse of this tool can result in criminal charges brought against the persons in question. The author will not be held responsible in the event any criminal charges be brought against any individuals misusing the provided tool to break the law.
 
 # What is this?
 A proof-of-concept tool built to identify folders that are exempted from AV real-time scanning in Windows systems.
