@@ -1,12 +1,12 @@
 # Disclaimer
 
-This tool is provided for educational purposes only. Any actions and or activities related to the material contained within this repository is solely your responsibility. The misuse of this tool can result in criminal charges brought against the persons in question. The author will not be held responsible in the event any criminal charges be brought against any individuals misusing the provided tool to break the law.
+This tool is provided for educational purposes only. Any actions and activities related to the material contained within this repository are solely your responsibility. Misusing this tool can result in criminal charges against the persons in question. The author will not be held responsible if any criminal charges are brought against any individuals misusing the provided tool to break the law.
 
 # What is this?
 A proof-of-concept tool built to identify folders that are exempted from AV real-time scanning in Windows systems.
 
 # How does it work?
-The tool receives a folder path as an argument and iterates through its child directories which are Y deep.  Y is a maximum depth argument provided by the user.  The tool creates N 512 bytes long files with random content in each directory.  N is the sample size provided by the user.  A larger N offers more precision and reduces the incidence of false positives.  The larger the N, the larger the number of files created.  Therefore, the longer the tool will take to run.  Five thousand seemed to provide a good time x accuracy relationship during my tests.  The tool will then record the average amount of time it took to create files in each of the directories.  At last, the tool checks to see if any of the directories has a mean time-to-write time that is at least X% faster than the global average.  X is called the sensitivity parameter.  Based on my tests, 0.25 (25%) seems to work for most cases.
+The tool receives a folder path as an argument and iterates through its child directories which are Y-deep.  Y is a maximum depth argument provided by the user.  The tool creates N 512 bytes long files with random content in each directory.  N is the sample size provided by the user.  A larger N offers more precision and reduces the incidence of false positives.  The larger the N, the larger the number of files created.  Therefore, the longer the tool will take to run.  Five thousand seemed to provide a good time x accuracy relationship during my tests.  The tool will then record the average amount of time it took to create files in each of the directories.  At last, the tool checks to see if any of the directories has a mean time-to-write time that is at least X% faster than the global average.  X is called the sensitivity parameter.  Based on my tests, 0.25 (25%) seems to work for most cases.
 
 # Why does it work?
 AV solutions will check most of the content written to disk and hook the calls related to file writing.  This extra step can produce a measurable time difference when writing to a folder that is excluded from real-time scanning.
@@ -30,7 +30,7 @@ Example:
 TimeException.exe --sample-size 1000 ---mode 0 --targets dirs.txt
 ```
 
-### Exntension execution mode
+### Extension execution mode
 Execution mode 1 (--mode 1) will try to map extensions in Defender's exclusion list. A user must provide a list of extensions to be tested through the **--targets** argument. The extensions in the targets file must have the format **.ext** (e.g. .png, .txt, .foobar, etc).  The **--sample-size** argument can be used to adjust the number of files created for each extension.
 
 Example:
@@ -39,7 +39,7 @@ TimeException.exe --sample-size 1000 ---mode 1 --targets exts.txt
 ```
 
 ### Process execution mode
-Execution mode 2 (--mode 2) will try to map processes in Defender's exclusion list. A user must provide a list of process names to be tested through the **--targets** argument. The extensions in the targets file must have the format **program.exe** (e.g. calc.exe, mspaint.exe, etc).  Process execution mode requires a benchmarker to be provided.  A benchmarker is a console application who accepts --sample-size as a valid argument and outputs a double floating point number.  TimeException itself is a benchmarker. The **--sample-size** argument can be used to adjust the number of operations performed by the benchmarker to calculate its result.
+Execution mode 2 (--mode 2) will try to map processes in Defender's exclusion list. A user must provide a list of process names to be tested through the **--targets** argument. The extensions in the targets file must have the format **program.exe** (e.g. calc.exe, mspaint.exe, etc).  Process execution mode requires a benchmarker to be provided.  A benchmarker is a console application that accepts --sample-size as a valid argument and outputs a double floating point number.  TimeException itself is a benchmarker. The **--sample-size** argument can be used to adjust the number of operations performed by the benchmarker to calculate its result.
 
 Example:
 ```
@@ -79,4 +79,4 @@ Usage:
 # Notes
 
 * I used Microsoft Defender for most of my testing.  Results may vary with different AV/EDR engines.
-* In a real Red Team engagement I would run the tool multiple times in different hours of the day before actually trying to write any payloads to the folders detected by the tool.  Disk load varies and false positives are to be expected.
+* In a real Red Team engagement, I would run the tool multiple times at different hours of the day before actually trying to write any payloads to the folders detected by the tool. Disk load varies, and false positives are to be expected.
