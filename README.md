@@ -27,7 +27,7 @@ Execution mode 0 (--mode 0) will try to map folders in Defender's exclusion list
 
 Example:
 ```
-TimeException.exe --sample-size 1000 ---mode 0 --targets dirs.txt
+TimeException.exe --sample-size 1000 --mode 0 --targets dirs.txt
 ```
 
 ### Extension execution mode
@@ -35,7 +35,7 @@ Execution mode 1 (--mode 1) will try to map extensions in Defender's exclusion l
 
 Example:
 ```
-TimeException.exe --sample-size 1000 ---mode 1 --targets exts.txt
+TimeException.exe --sample-size 1000 --mode 1 --targets exts.txt
 ```
 
 ### Process execution mode
