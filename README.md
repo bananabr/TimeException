@@ -80,3 +80,5 @@ Usage:
 
 * I used Microsoft Defender for most of my testing.  Results may vary with different AV/EDR engines.
 * In a real Red Team engagement, I would run the tool multiple times at different hours of the day before actually trying to write any payloads to the folders detected by the tool. Disk load varies, and false positives are to be expected.
+
+[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/bananabr)
